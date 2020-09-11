@@ -1,0 +1,10 @@
+find_package(GTest)
+include(GoogleTest)
+
+add_executable(test_matrix_basic_heap test_matrix_basic_heap.cpp)
+target_link_libraries(test_matrix_basic_heap GTest::GTest)
+gtest_discover_tests(test_matrix_basic_heap)
+
+add_executable(test_matrix_basic_stack test_matrix_basic_stack.cpp)
+target_link_libraries(test_matrix_basic_stack GTest::GTest)
+gtest_discover_tests(test_matrix_basic_stack)
