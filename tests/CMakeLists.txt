@@ -25,13 +25,15 @@ FetchContent_MakeAvailable(googletest)
 ### Method for locally-install gtest library
 # find_package(GTest)
 # include(GoogleTest)
-# And you need to link as GTest::GTest
+# You need to link library as GTest::GTest
+# And you can use the following command instead of using add_test()
+# i.e. gtest_discover_tests(test_matrix_basic_stack)
 
 add_executable(test_matrix_basic_heap test_matrix_basic_heap.cpp)
 target_link_libraries(test_matrix_basic_heap PRIVATE gtest)
-# This is boundled with cmake-gtest module
-# gtest_discover_tests(test_matrix_basic_heap)
+add_test(test_matrix_basic_heap test_matrix_basic_heap)
 
 add_executable(test_matrix_basic_stack test_matrix_basic_stack.cpp)
 target_link_libraries(test_matrix_basic_stack PRIVATE gtest)
-# gtest_discover_tests(test_matrix_basic_stack)
+add_test(test_matrix_basic_stack test_matrix_basic_stack)
+
