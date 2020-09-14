@@ -12,4 +12,4 @@ endif()
 # set(CMAKE_CXX_CLANG_TIDY "clang-tidy;-checks=*")
 
 add_subdirectory(src)
-add_subdirectory(tests) 
+add_subdirectory(tests)

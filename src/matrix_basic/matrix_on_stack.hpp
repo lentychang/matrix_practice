@@ -1,15 +1,16 @@
-#include<iostream>
-#include<vector>
-#include<initializer_list>
+#include <initializer_list>
+#include <iostream>
+#include <vector>
 
 template<typename T>
-class Matrix{
+class Matrix {
     std::vector<T> elems;
-    public:
+
+public:
     Matrix(std::initializer_list<T> lst): elems(lst){};
-    const std::vector<T>& get_elems() {return elems;};
+    const std::vector<T>& get_elems() { return elems; };
 };
 
 // int main(){
-    
+
 // }
