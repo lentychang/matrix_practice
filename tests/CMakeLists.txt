@@ -1,19 +1,23 @@
 find_package(Threads REQUIRED)
 
-### Method for CI Test ###
-# This requires cmake newer than 3.11
+# Method for CI Test ### This requires cmake newer than 3.11
 include(FetchContent)
 FetchContent_Declare(
   googletest
   GIT_REPOSITORY https://github.com/google/googletest.git
-  GIT_TAG        release-1.8.0
-)
+  GIT_TAG release-1.8.0)
 
 FetchContent_GetProperties(googletest)
 
-set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-set(BUILD_GMOCK OFF CACHE BOOL "" FORCE)
-set(BUILD_GTEST ON CACHE BOOL "" FORCE)
+set(gtest_force_shared_crt
+    ON
+    CACHE BOOL "" FORCE)
+set(BUILD_GMOCK
+    OFF
+    CACHE BOOL "" FORCE)
+set(BUILD_GTEST
+    ON
+    CACHE BOOL "" FORCE)
 
 if(NOT googletest_POPULATED)
   FetchContent_Populate(googletest)
@@ -22,12 +26,10 @@ endif()
 
 FetchContent_MakeAvailable(googletest)
 
-### Method for locally-install gtest library
-# find_package(GTest)
-# include(GoogleTest)
-# You need to link library as GTest::GTest
-# And you can use the following command instead of using add_test()
-# i.e. gtest_discover_tests(test_matrix_basic_stack)
+# Method for locally-install gtest library find_package(GTest)
+# include(GoogleTest) You need to link library as GTest::GTest And you can use
+# the following command instead of using add_test() i.e.
+# gtest_discover_tests(test_matrix_basic_stack)
 
 add_executable(test_matrix_basic_heap test_matrix_basic_heap.cpp)
 target_link_libraries(test_matrix_basic_heap PRIVATE gtest)
@@ -36,4 +38,3 @@ add_test(test_matrix_basic_heap test_matrix_basic_heap)
 add_executable(test_matrix_basic_stack test_matrix_basic_stack.cpp)
 target_link_libraries(test_matrix_basic_stack PRIVATE gtest)
 add_test(test_matrix_basic_stack test_matrix_basic_stack)
-
