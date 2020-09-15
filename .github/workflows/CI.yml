@@ -6,9 +6,9 @@ name: CI
 # events but only for the master branch
 on:
   push:
-    branches: [ master ]
+    branches: [ master, devel ]
   pull_request:
-    branches: [ master ]
+    branches: [ master, devel ]
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)

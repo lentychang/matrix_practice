@@ -1,5 +1,5 @@
 # matrix_practice
-![master](https://github.com/lentychang/matrix_practice/workflows/CMake/badge.svg?branch?branch=master)
+![CI](https://github.com/lentychang/matrix_practice/workflows/CI/badge.svg?branch=master)  
 Practice designing classes for multi-dimensional matrix multiplication with C++11 and newer feature
 
 ## Requirements
