@@ -32,9 +32,21 @@ FetchContent_MakeAvailable(googletest)
 # gtest_discover_tests(test_matrix_basic_stack)
 
 add_executable(test_matrix_basic_heap test_matrix_basic_heap.cpp)
-target_link_libraries(test_matrix_basic_heap PRIVATE gtest)
+if(NOT MSVC)
+  target_compile_options(test_matrix_basic_heap PUBLIC -Wall -pedantic)
+endif(NOT MSVC)
+target_link_libraries(
+  test_matrix_basic_heap
+  PUBLIC coverage_config
+  PRIVATE gtest)
 add_test(test_matrix_basic_heap test_matrix_basic_heap)
 
 add_executable(test_matrix_basic_stack test_matrix_basic_stack.cpp)
-target_link_libraries(test_matrix_basic_stack PRIVATE gtest)
+if(NOT MSVC)
+  target_compile_options(test_matrix_basic_stack PUBLIC -Wall -pedantic)
+endif(NOT MSVC)
+target_link_libraries(
+  test_matrix_basic_stack
+  PUBLIC coverage_config
+  PRIVATE gtest)
 add_test(test_matrix_basic_stack test_matrix_basic_stack)
