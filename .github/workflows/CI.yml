@@ -13,6 +13,7 @@ on:
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Debug
+  CODECOV_TOKEN: 124cebc4-3b71-424b-9ad5-8d378ce97b5b
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -54,3 +55,18 @@ jobs:
         # Execute tests defined by the CMake configuration.  
         # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
         run: ctest -C $BUILD_TYPE
+      - name: Install lcov
+        working-directory: ${{runner.workspace}}
+        shell: bash
+        run: sudo apt install -y lcov cppcheck && which cppcheck
+
+      - name: Test Coverage
+        working-directory: ${{runner.workspace}}
+        shell: bash
+        run: |
+          lcov --capture --directory . --output-file coverage.info
+          lcov --remove coverage.info '/usr/*' --output-file coverage.info
+          lcov --list coverage.info # debug info
+          bash <(curl -s https://codecov.io/bash) -f coverage.info || echo "Codecov did not collect coverage reports"
+
+        
