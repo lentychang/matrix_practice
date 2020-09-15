@@ -2,7 +2,7 @@
 |   | master  | devel  |
 |---|---|---|
 | Build & Test  | ![CI](https://github.com/lentychang/matrix_practice/workflows/CI/badge.svg?branch=master) | ![CI](https://github.com/lentychang/matrix_practice/workflows/CI/badge.svg?branch=master) |
-| Test Coverage  | Coverage [![codecov](https://codecov.io/gh/lentychang/matrix_practice/branch/master/graph/badge.svg)](https://codecov.io/gh/lentychang/matrix_practice) | Coverage [![codecov](https://codecov.io/gh/lentychang/matrix_practice/branch/devel/graph/badge.svg)](https://codecov.io/gh/lentychang/matrix_practice) |
+| Test Coverage  | [![codecov](https://codecov.io/gh/lentychang/matrix_practice/branch/master/graph/badge.svg)](https://codecov.io/gh/lentychang/matrix_practice) | [![codecov](https://codecov.io/gh/lentychang/matrix_practice/branch/devel/graph/badge.svg)](https://codecov.io/gh/lentychang/matrix_practice) |
 
 master:
 Practice designing classes for multi-dimensional matrix multiplication with C++11 and newer feature
