@@ -1,6 +1,7 @@
 # user defined
 build/*
 .vscode/*
+coverage.info
 # Prerequisites
 *.d
 
