@@ -9,9 +9,9 @@ class Matrix {
     std::vector<unsigned int> shp;
 
 public:
-    Matrix(std::initializer_list<T> lst): elems(lst), shp{lst.size()} {};
+    Matrix(std::initializer_list<T> lst): elems(lst), shp{static_cast<unsigned int>(lst.size())} {};
     // init all elements with given value
     Matrix(unsigned int N, T val): elems{std::vector<T>(N, val)}, shp{N} {};
-    std::vector<unsigned int> shape() { return shp; };
-    const std::vector<T>&     get_elems() { return elems; };
+    auto                  shape() const { return shp; };
+    const std::vector<T>& get_elems() { return elems; };
 };
