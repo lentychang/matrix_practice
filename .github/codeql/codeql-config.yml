@@ -4,3 +4,10 @@ name: "Extended CodeQL Config"
 queries:
   - name: Security and quality queries
     uses: security-and-quality
+
+paths-ignore:
+  - build
+  - tests
+
+paths:
+  - src
