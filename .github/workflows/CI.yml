@@ -108,5 +108,5 @@ jobs:
       - name: clang-tidy
         shell: bash
         run: |
-          find . -name "*.cpp" | xargs clang-tidy -p build
+          find . -name "*.cpp" | xargs clang-tidy -p ${{runner.workspace}}/build
         
