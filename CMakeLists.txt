@@ -4,17 +4,19 @@ enable_testing()
 set(CMAKE_CXX_STANDARD 17)
 
 # ######### [Cppcheck] ##########
-find_program(CMAKE_CXX_CPPCHECK NAMES cppcheck)
-if(CMAKE_CXX_CPPCHECK)
-  list(APPEND CMAKE_CXX_CPPCHECK "--enable=warning" "--inconclusive" "--force"
-       "--inline-suppr")
-else()
-  message(WARNING "Cppcheck not found, disable cppcheck function")
-  unset(CMAKE_CXX_CPPCHECK CACHE)
-endif()
+# find_program(CMAKE_CXX_CPPCHECK NAMES cppcheck)
+# if(CMAKE_CXX_CPPCHECK)
+#   message(STATUS "Cppcheck found and enabled!")
+#   list(APPEND CMAKE_CXX_CPPCHECK "--enable=warning" "--inconclusive" "--force"
+#        "--inline-suppr")
+# else()
+#   message(WARNING "Cppcheck not found, disable cppcheck function")
+#   unset(CMAKE_CXX_CPPCHECK CACHE)
+# endif()
 # ##############################################################################
 
-# ######### Clang-tidy ##########
+# Clang-tidy ########
+
 # set(CMAKE_CXX_CLANG_TIDY "clang-tidy;-checks=*")
 
 # ######### Code Coverage ##########

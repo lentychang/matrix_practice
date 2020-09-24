@@ -13,7 +13,8 @@ on:
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Debug
-  CODECOV_TOKEN: 124cebc4-3b71-424b-9ad5-8d378ce97b5b
+  CC: /usr/bin/clang
+  CXX: /usr/bin/clang++
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -30,7 +31,7 @@ jobs:
       - name: Install Dependencies 
         working-directory: ${{runner.workspace}}
         shell: bash
-        run: sudo apt install -y cppcheck clang-tidy lcov
+        run: sudo apt install -y lcov
 
       # Cmake Configure
       - name: Create Build Environment
@@ -46,7 +47,7 @@ jobs:
         # and build directories, but this is only available with CMake 3.13 and higher.  
         # The CMake binaries on the Github Actions machines are (as of this writing) 3.12
         run: 
-          cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+          cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
           
       - name: Build
         working-directory: ${{runner.workspace}}/build
@@ -69,5 +70,37 @@ jobs:
           lcov --no-external --remove coverage.info '/usr/*' '*/gtest*' --output-file coverage.info
           lcov --list coverage.info # debug info
           bash <(curl -s https://codecov.io/bash) -f coverage.info || echo "Codecov did not collect coverage reports"
+      - uses: actions/upload-artifact@v2
+        with:
+          name: build_dir
+          path: ./build
 
+          
+  static-check:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: build_dir
+          path: ./build
+
+      - name: Install Dependencies 
+        shell: bash
+        run: sudo apt install -y cppcheck clang clang-tidy 
+        
+      - name: cppcheck
+        shell: bash
+        run: |
+          cppcheck --profile=build/compile_commands.json -i${{runner.workspace}}/build/_deps
+
+      - name: clang-tidy
+        shell: bash
+        run: |
+          find . -name "*.cpp" | xargs clang-tidy -p build
         
