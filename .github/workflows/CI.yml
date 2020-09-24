@@ -103,7 +103,7 @@ jobs:
       - name: cppcheck
         shell: bash
         run: |
-          cppcheck --profile=build/compile_commands.json -i${{runner.workspace}}/build/_deps
+          cppcheck --project=${{runner.workspace}}/build/compile_commands.json -i${{runner.workspace}}/build/_deps
 
       - name: clang-tidy
         shell: bash
