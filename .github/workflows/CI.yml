@@ -117,7 +117,8 @@ jobs:
           conan install $GITHUB_WORKSPACE -s compiler.libcxx=libstdc++11 --build=gtest
           cmake $GITHUB_WORKSPACE \
             -DCMAKE_PROJECT_Matrix_Practice_INCLUDE=${{runner.workspace}}/build/conan_paths.cmake \
-            -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+            -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
+            -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
        
       - name: cppcheck
         shell: bash
