@@ -53,8 +53,9 @@ jobs:
         # The CMake binaries on the Github Actions machines are (as of this writing) 3.12
         run: | 
           conan install $GITHUB_WORKSPACE 
+          ls
           cmake $GITHUB_WORKSPACE \
-            -DCMAKE_PROJECT_Matrix_Practice_INCLUDE=conan_paths.cmake \
+            -DCMAKE_PROJECT_Matrix_Practice_INCLUDE=${{runner.workspace}}/build/conan_paths.cmake \
             -DCMAKE_BUILD_TYPE=$BUILD_TYPE
           
       - name: Build
