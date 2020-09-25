@@ -77,7 +77,7 @@ jobs:
       shell: bash
       working-directory: ${{runner.workspace}}/build
       run: | 
-        conan install $$GITHUB_WORKSPACE -s compiler.libcxx=libstdc++11
+        conan install $GITHUB_WORKSPACE -s compiler.libcxx=libstdc++11
         cmake $GITHUB_WORKSPACE \
           -DCMAKE_PROJECT_Matrix_Practice_INCLUDE=${{runner.workspace}}/build/conan_paths.cmake \
           -DCMAKE_BUILD_TYPE=Release
