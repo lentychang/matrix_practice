@@ -75,7 +75,7 @@ jobs:
 
     - name: Configure CMake
       shell: bash
-      working-directory: ${{runner.workspace}}
+      working-directory: ${{runner.workspace}}/build
       run: | 
         conan install $$GITHUB_WORKSPACE
         cmake $GITHUB_WORKSPACE \
