@@ -49,8 +49,8 @@ jobs:
 
     # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
     # If this step fails, then you should remove it and run the build manually (see below)
-    - name: Autobuild
-      uses: github/codeql-action/autobuild@v1
+    # - name: Autobuild
+    #   uses: github/codeql-action/autobuild@v1
 
     # ℹ️ Command-line programs to run using the OS shell.
     # 📚 https://git.io/JvXDl
@@ -58,10 +58,34 @@ jobs:
     # ✏️ If the Autobuild fails above, remove it and uncomment the following three lines
     #    and modify them (or add more) to build your code if your project
     #    uses a compiled language
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
 
-    #- run: |
-    #   make bootstrap
-    #   make release
+    - name: Install Dependencies 
+      working-directory: ${{runner.workspace}}
+      shell: bash
+      run: |
+        sudo apt install -y lcov 
+        python -m pip install conan
 
+    - name: Create Build Environment
+      run: cmake --version && cmake -E make_directory ${{runner.workspace}}/build
+
+    - name: Configure CMake
+      shell: bash
+      working-directory: ${{runner.workspace}}
+      run: | 
+        conan install $$GITHUB_WORKSPACE
+        cmake $GITHUB_WORKSPACE \
+          -DCMAKE_PROJECT_Matrix_Practice_INCLUDE=conan_paths.cmake \
+          -DCMAKE_BUILD_TYPE=Release
+        
+    - name: Build
+      working-directory: ${{runner.workspace}}/build
+      shell: bash
+      run: cmake --build . --config Release
+      
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v1

@@ -26,11 +26,17 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
 
       - name: Install Dependencies 
         working-directory: ${{runner.workspace}}
         shell: bash
-        run: sudo apt install -y lcov
+        run: |
+          sudo apt install -y lcov 
+          python -m pip install conan
 
       # CMake informatiuon and setting up build dir
       - name: Create Build Environment
@@ -41,12 +47,15 @@ jobs:
       # If no shell is not given, then the runner shell is used, which has no env var.
       - name: Configure CMake
         shell: bash
-        working-directory: ${{runner.workspace}}/build
+        working-directory: ${{runner.workspace}}
         # Note the current convention is to use the -S and -B options here to specify source 
         # and build directories, but this is only available with CMake 3.13 and higher.  
         # The CMake binaries on the Github Actions machines are (as of this writing) 3.12
-        run: 
-          cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+        run: | 
+          conan install $GITHUB_WORKSPACE 
+          cmake $GITHUB_WORKSPACE \
+            -DCMAKE_PROJECT_Matrix_Practice_INCLUDE=conan_paths.cmake \
+            -DCMAKE_BUILD_TYPE=$BUILD_TYPE
           
       - name: Build
         working-directory: ${{runner.workspace}}/build
