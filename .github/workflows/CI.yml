@@ -92,9 +92,11 @@ jobs:
 
       - name: Install Dependencies 
         shell: bash
-        run: sudo apt install -y cppcheck clang clang-tidy 
-      
-      # Cmake Configure
+        run: | 
+          sudo apt install -y cppcheck clang clang-tidy 
+          python -m pip install conan
+
+      # CMake informatiuon and setting up build dir
       - name: Create Build Environment
         run: cmake --version && cmake -E make_directory ${{runner.workspace}}/build
 
@@ -107,9 +109,12 @@ jobs:
         # Note the current convention is to use the -S and -B options here to specify source 
         # and build directories, but this is only available with CMake 3.13 and higher.  
         # The CMake binaries on the Github Actions machines are (as of this writing) 3.12
-        run: 
-          cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
-        
+        run: | 
+          conan install $GITHUB_WORKSPACE -s compiler.libcxx=libstdc++11
+          cmake $GITHUB_WORKSPACE \
+            -DCMAKE_PROJECT_Matrix_Practice_INCLUDE=${{runner.workspace}}/build/conan_paths.cmake \
+            -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+       
       - name: cppcheck
         shell: bash
         run: |
