@@ -20,17 +20,15 @@ python -m pip install conan
 mkdir build && cd build
 
 # install dependencies through conan
-conan install ..
+conan install -s compiler.libcxx=libstdc++11 ..
 # cmake configure
-cmake -DCMAKE_PROJECT_Matrix_Practice_INCLUDE=conan_paths.cmake ..
+cmake -DCMAKE_PROJECT_Matrix_Practice_INCLUDE=build/conan_paths.cmake ..
 make 
 ```
 
 ### Method2 Using system package manager
 ```
 sudo apt install libgtest-dev
-sed -i "1s/^/find_package(GTest)\n/" tests/CMakeLists.txt
-sed -i "s/gtest)/GTest::GTest)/g" tests/CMakeLists.txt
 ```
 
 ---

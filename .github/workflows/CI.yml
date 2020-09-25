@@ -52,8 +52,7 @@ jobs:
         # and build directories, but this is only available with CMake 3.13 and higher.  
         # The CMake binaries on the Github Actions machines are (as of this writing) 3.12
         run: | 
-          conan install $GITHUB_WORKSPACE 
-          ls
+          conan install $GITHUB_WORKSPACE -s compiler.libcxx=libstdc++11
           cmake $GITHUB_WORKSPACE \
             -DCMAKE_PROJECT_Matrix_Practice_INCLUDE=${{runner.workspace}}/build/conan_paths.cmake \
             -DCMAKE_BUILD_TYPE=$BUILD_TYPE
